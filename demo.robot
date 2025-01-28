@@ -7,13 +7,13 @@ Suite Teardown    Close All Browsers
 
 *** variables ***
 
-${SLIDER_INPUT}=    10
-${SVG}=         id:svgRect
-${WEB_SITE}=    https://seleniumbase.com
-${URL}=         https://seleniumbase.io/demo_page/
-${SLIDER}=      id:mySlider
-${PROGRESS_TEXT}=    id:progressLabel
+${SLIDER_INPUT}=     10
+${SVG}=              id:svgRect
+${SLIDER}=           id:mySlider
 ${PROGRESS_BAR}=     id:progressBar
+${PROGRESS_TEXT}=    id:progressLabel
+${WEB_SITE}=         https://seleniumbase.com
+${URL}=              https://seleniumbase.io/demo_page/
 
 ***Test Cases***
 
