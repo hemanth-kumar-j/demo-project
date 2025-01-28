@@ -13,7 +13,7 @@ ${WEB_SITE}=    https://seleniumbase.com
 ${URL}=         https://seleniumbase.io/demo_page/
 ${SLIDER}=      id:mySlider
 ${PROGRESS_TEXT}=    id:progressLabel
-${PROGRESS_BAR}=    id:progressBar
+${PROGRESS_BAR}=     id:progressBar
 
 ***Test Cases***
 
