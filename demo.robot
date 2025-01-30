@@ -7,13 +7,17 @@ Suite Teardown    Close All Browsers
 
 *** variables ***
 
-${SLIDER_INPUT}=     10
-${SVG}=              id:svgRect
-${SLIDER}=           id:mySlider
-${PROGRESS_BAR}=     id:progressBar
-${PROGRESS_TEXT}=    id:progressLabel
-${WEB_SITE}=         https://seleniumbase.com
-${URL}=              https://seleniumbase.io/demo_page/
+${SLIDER_INPUT}=      10
+${DROPDOWN_VALUE}=    75
+${SVG}=               id:svgRect
+${METER_BAR}=         id:meterBar
+${SLIDER}=            id:mySlider
+${DROPDOWN}=          id:mySelect
+${METER_TEXT}=        id:meterLabel
+${PROGRESS_BAR}=      id:progressBar
+${PROGRESS_TEXT}=     id:progressLabel
+${WEB_SITE}=          https://seleniumbase.com
+${URL}=               https://seleniumbase.io/demo_page/
 
 ***Test Cases***
 
@@ -25,6 +29,10 @@ Test slider
     [Tags]    slider
     Move slider
     Check progress bar
+
+Test meter
+    [Tags]    meter
+    Select dropdown value and check meter
 
 Test url link
     [Tags]    url_link
@@ -63,6 +71,16 @@ Check progress bar
     Should Be Equal    ${VALUE}    ${SLIDER_INPUT}
     ${PROGRESS}=    Set Variable    <h2>${TEXT}</h2>
     Log    ${PROGRESS}    html=True
+
+Select dropdown value and check meter
+    Select From List By Label    ${DROPDOWN}    Set to ${DROPDOWN_VALUE}%
+    ${TEXT}=    Get Text    ${METER_TEXT}
+    Should Contain    ${TEXT}    ${DROPDOWN_VALUE}%
+    ${VALUE}=    Get Element Attribute    ${METER_BAR}    value
+    ${PERCENTAGE}=    Evaluate    float(${VALUE}) * 100
+    Should Be Equal As Numbers    ${PERCENTAGE}    ${DROPDOWN_VALUE}
+    ${METER}=    Set Variable    <h2>${TEXT}</h2>
+    Log    ${METER}    html=True
 
 Click url and check output
     Page Should Contain Link    ${WEB_SITE}
