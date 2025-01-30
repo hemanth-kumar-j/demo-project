@@ -17,10 +17,9 @@ ${URL}=              https://seleniumbase.io/demo_page/
 
 ***Test Cases***
 
-Test svg color
+Test svg
     [Tags]    svg
-    ${FILL_COLOR}=    Get Element Attribute    ${SVG}    fill
-    Should Be Equal    "${FILL_COLOR}"    "#4CA0A0"
+    Check svg animation and color
 
 Test slider
     [Tags]    slider
@@ -38,6 +37,14 @@ Setup Test Suite
     SeleniumLibrary.Set Screenshot Directory    EMBED
     Open Browser    ${URL}    chrome    options=add_argument("--start-maximized")
     Wait Until Page Contains    SeleniumBase
+
+Check svg animation and color
+    Sleep    2
+    Click Element    ${SVG}
+    ${animation_state}=    Execute JavaScript    return window.getComputedStyle(document.querySelector('svg rect')).animationPlayState
+    Should Be Equal    ${animation_state}    running
+    ${FILL_COLOR}=    Get Element Attribute    ${SVG}    fill
+    Should Be Equal    "${FILL_COLOR}"    "#4CA0A0"
 
 Move slider
     ${SLIDER_BAR}=    Get element width    ${SLIDER}
