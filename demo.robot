@@ -9,14 +9,16 @@ Suite Teardown    Close All Browsers
 
 ${SLIDER_INPUT}=      10
 ${DROPDOWN_VALUE}=    75
+${IMAGE}=             tag:img
 ${SVG}=               id:svgRect
+${IMAGE_IFRAME}=      id:myFrame1
 ${METER_BAR}=         id:meterBar
 ${SLIDER}=            id:mySlider
 ${DROPDOWN}=          id:mySelect
 ${METER_TEXT}=        id:meterLabel
 ${PROGRESS_BAR}=      id:progressBar
 ${PROGRESS_TEXT}=     id:progressLabel
-${WEB_SITE}=          https://seleniumbase.com
+${URL_LINK}=          https://seleniumbase.com
 ${URL}=               https://seleniumbase.io/demo_page/
 
 ***Test Cases***
@@ -33,6 +35,14 @@ Test slider
 Test meter
     [Tags]    meter
     Select dropdown value and check meter
+
+Test image in iframe
+    [Tags]    image
+    Check image in iframe
+
+Test iframe text
+    [Tags]    i_text
+    Check image in iframe
 
 Test url link
     [Tags]    url_link
@@ -83,14 +93,20 @@ Select dropdown value and check meter
     Log    ${METER}    html=True
 
 Click url and check output
-    Page Should Contain Link    ${WEB_SITE}
-    Click Link    ${WEB_SITE}
+    Page Should Contain Link    ${URL_LINK}
+    Click Link    ${URL_LINK}
     Wait Until Page Contains    Web Automation & Testing with Python
     Sleep    2
     Capture Page Screenshot
     Go Back
     Sleep    2
     Capture Page Screenshot
+
+Check image in iframe
+    Select Frame    ${IMAGE_IFRAME}
+    Wait Until Element Is Visible    ${IMAGE}
+    Capture Element Screenshot    ${IMAGE}
+    Unselect Frame
 
 Get element width
     [Arguments]    ${ELEMENT_DIV}
