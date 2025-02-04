@@ -18,6 +18,8 @@ ${DROPDOWN}=          id:mySelect
 ${TEXT_IFRAME}=       id:myFrame2
 ${METER_TEXT}=        id:meterLabel
 ${PROGRESS_BAR}=      id:progressBar
+${RADIO_BUTTON_1}=    id:radioButton1
+${RADIO_BUTTON_2}=    id:radioButton2
 ${PROGRESS_TEXT}=     id:progressLabel
 ${I_TEXT}=            xpath:/html/body/h4
 ${URL_LINK}=          https://seleniumbase.com
@@ -45,6 +47,10 @@ Test image in iframe
 Test iframe text
     [Tags]    i_text
     Check text in iframe
+
+Test radio buttons
+    [Tags]    radio
+    Select radio buttons and verify
 
 Test url link
     [Tags]    url_link
@@ -105,6 +111,14 @@ Check text in iframe
     ${TEXT}=    Get Text    ${I_TEXT}
     Should Be Equal    ${TEXT}    iFrame Text
     Unselect Frame
+
+Select radio buttons and verify
+    Click Element    ${RADIO_BUTTON_2}
+    ${CHECKED}=    Get Element Attribute    ${RADIO_BUTTON_2}    checked
+    Should Be Equal    ${CHECKED}    true
+    Click Element    ${RADIO_BUTTON_1}
+    ${CHECKED}=    Get Element Attribute    ${RADIO_BUTTON_1}    checked
+    Should Be Equal    ${CHECKED}    true
 
 Click url and check output
     Page Should Contain Link    ${URL_LINK}
