@@ -15,9 +15,11 @@ ${IMAGE_IFRAME}=      id:myFrame1
 ${METER_BAR}=         id:meterBar
 ${SLIDER}=            id:mySlider
 ${DROPDOWN}=          id:mySelect
+${TEXT_IFRAME}=       id:myFrame2
 ${METER_TEXT}=        id:meterLabel
 ${PROGRESS_BAR}=      id:progressBar
 ${PROGRESS_TEXT}=     id:progressLabel
+${I_TEXT}=            xpath:/html/body/h4
 ${URL_LINK}=          https://seleniumbase.com
 ${URL}=               https://seleniumbase.io/demo_page/
 
@@ -42,7 +44,7 @@ Test image in iframe
 
 Test iframe text
     [Tags]    i_text
-    Check image in iframe
+    Check text in iframe
 
 Test url link
     [Tags]    url_link
@@ -92,6 +94,18 @@ Select dropdown value and check meter
     ${METER}=    Set Variable    <h2>${TEXT}</h2>
     Log    ${METER}    html=True
 
+Check image in iframe
+    Select Frame    ${IMAGE_IFRAME}
+    Wait Until Element Is Visible    ${IMAGE}
+    Capture Element Screenshot    ${IMAGE}
+    Unselect Frame
+
+Check text in iframe
+    Select Frame    ${TEXT_IFRAME}
+    ${TEXT}=    Get Text    ${I_TEXT}
+    Should Be Equal    ${TEXT}    iFrame Text
+    Unselect Frame
+
 Click url and check output
     Page Should Contain Link    ${URL_LINK}
     Click Link    ${URL_LINK}
@@ -101,12 +115,6 @@ Click url and check output
     Go Back
     Sleep    2
     Capture Page Screenshot
-
-Check image in iframe
-    Select Frame    ${IMAGE_IFRAME}
-    Wait Until Element Is Visible    ${IMAGE}
-    Capture Element Screenshot    ${IMAGE}
-    Unselect Frame
 
 Get element width
     [Arguments]    ${ELEMENT_DIV}
