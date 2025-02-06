@@ -20,6 +20,9 @@ ${SLIDER}=            id:mySlider
 ${DROPDOWN}=          id:mySelect
 ${TEXT_IFRAME}=       id:myFrame2
 ${CHECKBOX}=          id:checkBox1
+${CHECKBOX_1}=        id:checkBox2
+${CHECKBOX_2}=        id:checkBox3
+${CHECKBOX_3}=        id:checkBox4
 ${METER_TEXT}=        id:meterLabel
 ${PROGRESS_BAR}=      id:progressBar
 ${RADIO_BUTTON_1}=    id:radioButton1
@@ -60,6 +63,10 @@ Test radio buttons
 Test checkbox and drag n drop
     [Tags]    drag_n_drop
     Select checkbox and drag n drop the image
+
+Test checkboxes
+    [Tags]    checkboxes
+    Select checkboxes and verify
 
 Test url link
     [Tags]    url_link
@@ -137,6 +144,18 @@ Select checkbox and drag n drop the image
     Capture Element Screenshot    ${HIDDEN_ROW}
     Drag And Drop    ${DRAG_IMAGE}    ${DROP_1}
 
+Select checkboxes and verify
+    Select checkbox and verify    ${CHECKBOX_1}
+    Select checkbox and verify    ${CHECKBOX_2}
+    Select checkbox and verify    ${CHECKBOX_3}
+
+Select checkbox and verify
+    [Arguments]    ${CHECKBOX}
+    Select Checkbox    ${CHECKBOX}
+    ${CHECKED}=    Get Element Attribute    ${CHECKBOX}    checked
+    Should Be Equal    ${CHECKED}    true
+    Sleep    1
+
 Click url and check output
     Page Should Contain Link    ${URL_LINK}
     Click Link    ${URL_LINK}
@@ -152,6 +171,3 @@ Get element width
     ${X}     ${Y}=    Get Element Size    ${ELEMENT_DIV}
     ${X}=    Convert To Number    ${X}    0
     RETURN    ${X}
-
-#    ${CHECKED}=    Get Element Attribute    ${CHECKBOX}    checked
-#    Should Be Equal    ${CHECKED}    true
