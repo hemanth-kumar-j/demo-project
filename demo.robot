@@ -10,17 +10,22 @@ Suite Teardown    Close All Browsers
 ${SLIDER_INPUT}=      10
 ${DROPDOWN_VALUE}=    75
 ${IMAGE}=             tag:img
+${DRAG_IMAGE}=        id:logo
+${DROP_1}=            id:drop1
+${DROP_2}=            id:drop2
 ${SVG}=               id:svgRect
 ${IMAGE_IFRAME}=      id:myFrame1
 ${METER_BAR}=         id:meterBar
 ${SLIDER}=            id:mySlider
 ${DROPDOWN}=          id:mySelect
 ${TEXT_IFRAME}=       id:myFrame2
+${CHECKBOX}=          id:checkBox1
 ${METER_TEXT}=        id:meterLabel
 ${PROGRESS_BAR}=      id:progressBar
 ${RADIO_BUTTON_1}=    id:radioButton1
 ${RADIO_BUTTON_2}=    id:radioButton2
 ${PROGRESS_TEXT}=     id:progressLabel
+${HIDDEN_ROW}=        class:hidden_row
 ${I_TEXT}=            xpath:/html/body/h4
 ${URL_LINK}=          https://seleniumbase.com
 ${URL}=               https://seleniumbase.io/demo_page/
@@ -51,6 +56,10 @@ Test iframe text
 Test radio buttons
     [Tags]    radio
     Select radio buttons and verify
+
+Test checkbox and drag n drop
+    [Tags]    drag_n_drop
+    Select checkbox and drag n drop the image
 
 Test url link
     [Tags]    url_link
@@ -120,6 +129,14 @@ Select radio buttons and verify
     ${CHECKED}=    Get Element Attribute    ${RADIO_BUTTON_1}    checked
     Should Be Equal    ${CHECKED}    true
 
+Select checkbox and drag n drop the image
+    Select Checkbox    ${CHECKBOX}
+    Wait Until Element Is Visible    ${DRAG_IMAGE}
+    Drag And Drop    ${DRAG_IMAGE}    ${DROP_2}
+    Sleep    1
+    Capture Element Screenshot    ${HIDDEN_ROW}
+    Drag And Drop    ${DRAG_IMAGE}    ${DROP_1}
+
 Click url and check output
     Page Should Contain Link    ${URL_LINK}
     Click Link    ${URL_LINK}
@@ -135,3 +152,6 @@ Get element width
     ${X}     ${Y}=    Get Element Size    ${ELEMENT_DIV}
     ${X}=    Convert To Number    ${X}    0
     RETURN    ${X}
+
+#    ${CHECKED}=    Get Element Attribute    ${CHECKBOX}    checked
+#    Should Be Equal    ${CHECKED}    true
