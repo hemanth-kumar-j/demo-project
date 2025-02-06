@@ -7,32 +7,34 @@ Suite Teardown    Close All Browsers
 
 *** variables ***
 
-${SLIDER_INPUT}=      10
-${DROPDOWN_VALUE}=    75
-${IMAGE}=             tag:img
-${DRAG_IMAGE}=        id:logo
-${DROP_1}=            id:drop1
-${DROP_2}=            id:drop2
-${SVG}=               id:svgRect
-${IMAGE_IFRAME}=      id:myFrame1
-${METER_BAR}=         id:meterBar
-${SLIDER}=            id:mySlider
-${DROPDOWN}=          id:mySelect
-${TEXT_IFRAME}=       id:myFrame2
-${CHECKBOX}=          id:checkBox1
-${CHECKBOX_1}=        id:checkBox2
-${CHECKBOX_2}=        id:checkBox3
-${CHECKBOX_3}=        id:checkBox4
-${PRE_CHECKBOX}=      id:checkBox5
-${METER_TEXT}=        id:meterLabel
-${PROGRESS_BAR}=      id:progressBar
-${RADIO_BUTTON_1}=    id:radioButton1
-${RADIO_BUTTON_2}=    id:radioButton2
-${PROGRESS_TEXT}=     id:progressLabel
-${HIDDEN_ROW}=        class:hidden_row
-${I_TEXT}=            xpath:/html/body/h4
-${URL_LINK}=          https://seleniumbase.com
-${URL}=               https://seleniumbase.io/demo_page/
+${SLIDER_INPUT}=       10
+${DROPDOWN_VALUE}=     75
+${IMAGE}=              tag:img
+${DRAG_IMAGE}=         id:logo
+${DROP_1}=             id:drop1
+${DROP_2}=             id:drop2
+${SVG}=                id:svgRect
+${IMAGE_IFRAME}=       id:myFrame1
+${METER_BAR}=          id:meterBar
+${SLIDER}=             id:mySlider
+${DROPDOWN}=           id:mySelect
+${TEXT_IFRAME}=        id:myFrame2
+${CHECKBOX_IFRAME}=    id:myFrame3
+${CHECKBOX}=           id:checkBox1
+${CHECKBOX_1}=         id:checkBox2
+${CHECKBOX_2}=         id:checkBox3
+${CHECKBOX_3}=         id:checkBox4
+${PRE_CHECKBOX}=       id:checkBox5
+${IFRAME_CHECKBOX}=    id:checkBox6
+${METER_TEXT}=         id:meterLabel
+${PROGRESS_BAR}=       id:progressBar
+${RADIO_BUTTON_1}=     id:radioButton1
+${RADIO_BUTTON_2}=     id:radioButton2
+${PROGRESS_TEXT}=      id:progressLabel
+${HIDDEN_ROW}=         class:hidden_row
+${I_TEXT}=             xpath:/html/body/h4
+${URL_LINK}=           https://seleniumbase.com
+${URL}=                https://seleniumbase.io/demo_page/
 
 ***Test Cases***
 
@@ -72,6 +74,10 @@ Test checkboxes
 Test pre-checkbox
     [Tags]    pre-checkbox
     Unselect pre-check box
+
+Test checkbox in iframe
+    [Tags]    iframe-checkbox
+    Select checkbox in iframe and verify
 
 Test url link
     [Tags]    url_link
@@ -168,6 +174,13 @@ Unselect pre-check box
     ELSE
         Log    "Checkbox is not pre-checked"
     END
+
+Select checkbox in iframe and verify
+    Select Frame    ${CHECKBOX_IFRAME}
+    Select Checkbox    ${IFRAME_CHECKBOX}
+    ${CHECKED}=    Get Element Attribute    ${IFRAME_CHECKBOX}    checked
+    Should Be Equal    ${CHECKED}    true
+    Unselect Frame
 
 Click url and check output
     Page Should Contain Link    ${URL_LINK}
