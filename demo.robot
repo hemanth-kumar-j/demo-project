@@ -14,6 +14,7 @@ ${DRAG_IMAGE}=         id:logo
 ${DROP_1}=             id:drop1
 ${DROP_2}=             id:drop2
 ${SVG}=                id:svgRect
+${LINK_TEXT}=          id:myLink2
 ${IMAGE_IFRAME}=       id:myFrame1
 ${METER_BAR}=          id:meterBar
 ${SLIDER}=             id:mySlider
@@ -34,6 +35,7 @@ ${PROGRESS_TEXT}=      id:progressLabel
 ${HIDDEN_ROW}=         class:hidden_row
 ${I_TEXT}=             xpath:/html/body/h4
 ${URL_LINK}=           https://seleniumbase.com
+${GITHUB_ICON}=        class:octicon-mark-github
 ${URL}=                https://seleniumbase.io/demo_page/
 
 ***Test Cases***
@@ -82,6 +84,10 @@ Test checkbox in iframe
 Test url link
     [Tags]    url_link
     Click url and check output
+
+Test link with text
+    [Tags]    text_link
+    Click link with text and verify
 
 *** Keywords ***
 
@@ -186,6 +192,18 @@ Click url and check output
     Page Should Contain Link    ${URL_LINK}
     Click Link    ${URL_LINK}
     Wait Until Page Contains    Web Automation & Testing with Python
+    Sleep    2
+    Capture Page Screenshot
+    Go Back
+    Sleep    1
+
+Click link with text and verify
+    ${TEXT}=    Get Text    ${LINK_TEXT}
+    Should Be Equal    ${TEXT}    SeleniumBase on GitHub
+    Click Link    ${TEXT}
+    ${CURRENT_URL}=    Get Location
+    Should Contain    ${CURRENT_URL}    github.com/seleniumbase/SeleniumBase
+    Wait Until Element Is Visible    ${GITHUB_ICON}
     Sleep    2
     Capture Page Screenshot
     Go Back
