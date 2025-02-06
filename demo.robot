@@ -23,6 +23,7 @@ ${CHECKBOX}=          id:checkBox1
 ${CHECKBOX_1}=        id:checkBox2
 ${CHECKBOX_2}=        id:checkBox3
 ${CHECKBOX_3}=        id:checkBox4
+${PRE_CHECKBOX}=      id:checkBox5
 ${METER_TEXT}=        id:meterLabel
 ${PROGRESS_BAR}=      id:progressBar
 ${RADIO_BUTTON_1}=    id:radioButton1
@@ -67,6 +68,10 @@ Test checkbox and drag n drop
 Test checkboxes
     [Tags]    checkboxes
     Select checkboxes and verify
+
+Test pre-checkbox
+    [Tags]    pre-checkbox
+    Unselect pre-check box
 
 Test url link
     [Tags]    url_link
@@ -155,6 +160,14 @@ Select checkbox and verify
     ${CHECKED}=    Get Element Attribute    ${CHECKBOX}    checked
     Should Be Equal    ${CHECKED}    true
     Sleep    1
+
+Unselect pre-check box
+    ${CHECKED}=    Get Element Attribute    ${PRE_CHECKBOX}    checked
+    IF    "${CHECKED}" == "true"
+        Unselect Checkbox    ${PRE_CHECKBOX}
+    ELSE
+        Log    "Checkbox is not pre-checked"
+    END
 
 Click url and check output
     Page Should Contain Link    ${URL_LINK}
