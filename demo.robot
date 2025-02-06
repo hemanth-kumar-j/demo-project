@@ -13,8 +13,10 @@ ${IMAGE}=              tag:img
 ${DRAG_IMAGE}=         id:logo
 ${DROP_1}=             id:drop1
 ${DROP_2}=             id:drop2
+${DEMO_PAGE}=          id:myForm
 ${SVG}=                id:svgRect
-${LINK_TEXT}=          id:myLink2
+${LINK_TEXT_1}=        id:myLink2
+${LINK_TEXT_2}=        id:myLink4
 ${IMAGE_IFRAME}=       id:myFrame1
 ${METER_BAR}=          id:meterBar
 ${SLIDER}=             id:mySlider
@@ -28,17 +30,29 @@ ${CHECKBOX_3}=         id:checkBox4
 ${PRE_CHECKBOX}=       id:checkBox5
 ${IFRAME_CHECKBOX}=    id:checkBox6
 ${METER_TEXT}=         id:meterLabel
+${HOVER_DROPDOWN}=     id:myDropdown
 ${PROGRESS_BAR}=       id:progressBar
+${DROPDOWN_LINK_1}=    id:dropOption1
+${DROPDOWN_LINK_2}=    id:dropOption2
+${DROPDOWN_LINK_3}=    id:dropOption3
 ${RADIO_BUTTON_1}=     id:radioButton1
 ${RADIO_BUTTON_2}=     id:radioButton2
 ${PROGRESS_TEXT}=      id:progressLabel
 ${HIDDEN_ROW}=         class:hidden_row
 ${I_TEXT}=             xpath:/html/body/h4
-${URL_LINK}=           https://seleniumbase.com
+${URL_LINK_2}=         https://seleniumbase.io
+${URL_LINK_1}=         https://seleniumbase.com
 ${GITHUB_ICON}=        class:octicon-mark-github
 ${URL}=                https://seleniumbase.io/demo_page/
+${DROPDOWN_OUTPUT}=    xpath://*[@id="tbodyId"]/tr[1]/td[4]/h3
 
 ***Test Cases***
+
+Test hover dropdown
+    [Tags]    dropdown
+    Select hover dropdown option and verify    ${DROPDOWN_LINK_1}    Link One Selected
+    Select hover dropdown option and verify    ${DROPDOWN_LINK_2}    Link Two Selected
+    Select hover dropdown option and verify    ${DROPDOWN_LINK_3}    Link Three Selected
 
 Test svg
     [Tags]    svg
@@ -83,11 +97,12 @@ Test checkbox in iframe
 
 Test url link
     [Tags]    url_link
-    Click url and check output
+    Click url and check output    ${URL_LINK_1}    Web Automation & Testing with Python
+    Click url and check output    ${URL_LINK_2}    SeleniumBase Docs
 
 Test link with text
     [Tags]    text_link
-    Click link with text and verify
+    Check link with text
 
 *** Keywords ***
 
@@ -96,6 +111,13 @@ Setup Test Suite
     SeleniumLibrary.Set Screenshot Directory    EMBED
     Open Browser    ${URL}    chrome    options=add_argument("--start-maximized")
     Wait Until Page Contains    SeleniumBase
+
+Select hover dropdown option and verify
+    [Arguments]    ${DROPDOWN_LINK}    ${OUTPUT}
+    Mouse Over    ${HOVER_DROPDOWN}
+    Wait Until Element Is Visible    ${DROPDOWN_LINK}
+    Click Element    ${DROPDOWN_LINK}
+    Wait Until Element Contains    ${DROPDOWN_OUTPUT}    ${OUTPUT}
 
 Check svg animation and color
     Sleep    2
@@ -189,24 +211,30 @@ Select checkbox in iframe and verify
     Unselect Frame
 
 Click url and check output
+    [Arguments]    ${URL_LINK}    ${VERIFY_TEXT}
     Page Should Contain Link    ${URL_LINK}
     Click Link    ${URL_LINK}
-    Wait Until Page Contains    Web Automation & Testing with Python
+    Wait Until Page Contains    ${VERIFY_TEXT}
     Sleep    2
     Capture Page Screenshot
     Go Back
     Sleep    1
 
+Check link with text
+    Click link with text and verify    ${LINK_TEXT_1}    SeleniumBase on GitHub    github.com/seleniumbase/SeleniumBase    ${GITHUB_ICON}
+    Go Back
+    Sleep    1
+    Capture Page Screenshot
+    Click link with text and verify    ${LINK_TEXT_2}    SeleniumBase Demo Page    https://seleniumbase.io/demo_page    ${DEMO_PAGE}
+
 Click link with text and verify
+    [Arguments]    ${LINK_TEXT}    ${LINK_NAME}    ${EXPECTED_URL}    ${EXPECTED_ELEMENT}
     ${TEXT}=    Get Text    ${LINK_TEXT}
-    Should Be Equal    ${TEXT}    SeleniumBase on GitHub
+    Should Be Equal    ${TEXT}    ${LINK_NAME}
     Click Link    ${TEXT}
     ${CURRENT_URL}=    Get Location
-    Should Contain    ${CURRENT_URL}    github.com/seleniumbase/SeleniumBase
-    Wait Until Element Is Visible    ${GITHUB_ICON}
-    Sleep    2
-    Capture Page Screenshot
-    Go Back
+    Should Contain    ${CURRENT_URL}    ${EXPECTED_URL}
+    Wait Until Page Contains Element        ${EXPECTED_ELEMENT}
     Sleep    2
     Capture Page Screenshot
 
