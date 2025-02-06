@@ -30,8 +30,10 @@ ${CHECKBOX_3}=         id:checkBox4
 ${PRE_CHECKBOX}=       id:checkBox5
 ${IFRAME_CHECKBOX}=    id:checkBox6
 ${METER_TEXT}=         id:meterLabel
+${TEXT_AREA}=          id:myTextarea
 ${HOVER_DROPDOWN}=     id:myDropdown
 ${PROGRESS_BAR}=       id:progressBar
+${TEXT_INPUT}=         id:myTextInput
 ${DROPDOWN_LINK_1}=    id:dropOption1
 ${DROPDOWN_LINK_2}=    id:dropOption2
 ${DROPDOWN_LINK_3}=    id:dropOption3
@@ -53,6 +55,14 @@ Test hover dropdown
     Select hover dropdown option and verify    ${DROPDOWN_LINK_1}    Link One Selected
     Select hover dropdown option and verify    ${DROPDOWN_LINK_2}    Link Two Selected
     Select hover dropdown option and verify    ${DROPDOWN_LINK_3}    Link Three Selected
+
+Test text input field
+    [Tags]    text_field
+    Input text and verify    ${TEXT_INPUT}    This is a sample text.
+
+Test textarea
+    [Tags]    textarea
+    Input text and verify    ${TEXT_AREA}    This is a sample text for the text area.
 
 Test svg
     [Tags]    svg
@@ -118,6 +128,12 @@ Select hover dropdown option and verify
     Wait Until Element Is Visible    ${DROPDOWN_LINK}
     Click Element    ${DROPDOWN_LINK}
     Wait Until Element Contains    ${DROPDOWN_OUTPUT}    ${OUTPUT}
+
+Input text and verify
+    [Arguments]    ${TEXT_FIELD}    ${INPUT_TEXT}
+    Input Text    ${TEXT_FIELD}    ${INPUT_TEXT}
+    ${TEXT}=    Get Value    ${TEXT_FIELD}
+    Should Be Equal    ${TEXT}    ${INPUT_TEXT}
 
 Check svg animation and color
     Sleep    2
