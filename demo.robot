@@ -39,8 +39,10 @@ ${DROPDOWN_LINK_2}=    id:dropOption2
 ${DROPDOWN_LINK_3}=    id:dropOption3
 ${RADIO_BUTTON_1}=     id:radioButton1
 ${RADIO_BUTTON_2}=     id:radioButton2
+${PRE_FILLED_TEXT}=    id:myTextInput2
 ${PROGRESS_TEXT}=      id:progressLabel
 ${HIDDEN_ROW}=         class:hidden_row
+${PLACEHOLDER}=        id:placeholderText
 ${I_TEXT}=             xpath:/html/body/h4
 ${URL_LINK_2}=         https://seleniumbase.io
 ${URL_LINK_1}=         https://seleniumbase.com
@@ -52,17 +54,23 @@ ${DROPDOWN_OUTPUT}=    xpath://*[@id="tbodyId"]/tr[1]/td[4]/h3
 
 Test hover dropdown
     [Tags]    dropdown
-    Select hover dropdown option and verify    ${DROPDOWN_LINK_1}    Link One Selected
-    Select hover dropdown option and verify    ${DROPDOWN_LINK_2}    Link Two Selected
-    Select hover dropdown option and verify    ${DROPDOWN_LINK_3}    Link Three Selected
+    Check hover dropdown option and verify
 
 Test text input field
     [Tags]    text_field
-    Input text and verify    ${TEXT_INPUT}    This is a sample text.
+    Check text input field and verify
 
-Test textarea
-    [Tags]    textarea
-    Input text and verify    ${TEXT_AREA}    This is a sample text for the text area.
+Test text area
+    [Tags]    text area
+    Check text area and verify
+
+Test pre-field text filled
+    [Tags]    pre_filled_text
+    Verify pre-filled text
+
+Test placeholder
+    [Tags]    placeholder
+    Verify placeholder disappears on typing
 
 Test svg
     [Tags]    svg
@@ -107,8 +115,7 @@ Test checkbox in iframe
 
 Test url link
     [Tags]    url_link
-    Click url and check output    ${URL_LINK_1}    Web Automation & Testing with Python
-    Click url and check output    ${URL_LINK_2}    SeleniumBase Docs
+    Check url link and verify
 
 Test link with text
     [Tags]    text_link
@@ -122,6 +129,11 @@ Setup Test Suite
     Open Browser    ${URL}    chrome    options=add_argument("--start-maximized")
     Wait Until Page Contains    SeleniumBase
 
+Check hover dropdown option and verify
+    Select hover dropdown option and verify    ${DROPDOWN_LINK_1}    Link One Selected
+    Select hover dropdown option and verify    ${DROPDOWN_LINK_2}    Link Two Selected
+    Select hover dropdown option and verify    ${DROPDOWN_LINK_3}    Link Three Selected
+
 Select hover dropdown option and verify
     [Arguments]    ${DROPDOWN_LINK}    ${OUTPUT}
     Mouse Over    ${HOVER_DROPDOWN}
@@ -129,11 +141,29 @@ Select hover dropdown option and verify
     Click Element    ${DROPDOWN_LINK}
     Wait Until Element Contains    ${DROPDOWN_OUTPUT}    ${OUTPUT}
 
+Check text input field and verify
+    Input text and verify    ${TEXT_INPUT}    This is a sample text.
+
+Check text area and verify
+    Input text and verify    ${TEXT_AREA}    This is a sample text for the text area.
+
 Input text and verify
     [Arguments]    ${TEXT_FIELD}    ${INPUT_TEXT}
     Input Text    ${TEXT_FIELD}    ${INPUT_TEXT}
     ${TEXT}=    Get Value    ${TEXT_FIELD}
     Should Be Equal    ${TEXT}    ${INPUT_TEXT}
+
+Verify pre-filled text
+    ${TEXT}=    Get Value    ${PRE_FILLED_TEXT}
+    Should Be Equal    ${TEXT}    Text...
+    Input Text    ${PRE_FILLED_TEXT}    Hello World!
+
+Verify placeholder disappears on typing
+    ${BEFORE_TEXT}=    Get Element Attribute    ${PLACEHOLDER}    placeholder
+    Should Be Equal    ${BEFORE_TEXT}    Placeholder Text Field
+    Input Text    ${PLACEHOLDER}    HELLO WORLD
+    ${AFTER_TEXT}=    Get Value    ${PLACEHOLDER}
+    Should Be Equal    ${AFTER_TEXT}    HELLO WORLD
 
 Check svg animation and color
     Sleep    2
@@ -225,6 +255,10 @@ Select checkbox in iframe and verify
     ${CHECKED}=    Get Element Attribute    ${IFRAME_CHECKBOX}    checked
     Should Be Equal    ${CHECKED}    true
     Unselect Frame
+
+Check url link and verify
+    Click url and check output    ${URL_LINK_1}    Web Automation & Testing with Python
+    Click url and check output    ${URL_LINK_2}    SeleniumBase Docs
 
 Click url and check output
     [Arguments]    ${URL_LINK}    ${VERIFY_TEXT}
