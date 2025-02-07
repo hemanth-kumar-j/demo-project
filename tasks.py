@@ -1,3 +1,4 @@
+"""Task automation using Invoke for Robot Framework tests."""
 from invoke import task
 
 DEFAULT_EXPANDS = [
@@ -23,12 +24,6 @@ def test(c, t=None):
 def clean(c):
     """Remove log files and reports."""
     c.run("rm -rf output.xml report.html log.html")
-
-
-@task
-def lint(c):
-    """Run pylint on the Python files."""
-    c.run("pylint tasks.py")
 
 
 @task
