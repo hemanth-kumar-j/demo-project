@@ -1,0 +1,16 @@
+repos:
+  # Black for auto-formatting
+  - repo: https://github.com/psf/black
+    rev: 23.12.1  # Check latest version
+    hooks:
+      - id: black
+        args: ["--line-length=88"]
+
+  # Pylint for linting all Python files
+  - repo: https://github.com/PyCQA/pylint
+    rev: v3.0.3  # Check latest version
+    hooks:
+      - id: pylint
+        args: ["--fail-under=8"]  # Fails commit if score < 8
+        types: [python]
+
