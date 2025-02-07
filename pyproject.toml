@@ -8,6 +8,8 @@ authors = [
 dependencies = [
     "robotframework>=7.2",
     "robotframework-seleniumlibrary>=6.7.0",
+    "invoke>=2.2.0",
+    "black>=25.1.0",
 ]
 readme = "README.md"
 requires-python = ">= 3.8"

@@ -11,16 +11,29 @@
 attrs==24.3.0
     # via outcome
     # via trio
+black==25.1.0
+    # via try
 certifi==2024.12.14
     # via selenium
 click==8.1.8
+    # via black
     # via robotframework-seleniumlibrary
 h11==0.14.0
     # via wsproto
 idna==3.10
     # via trio
+invoke==2.2.0
+    # via try
+mypy-extensions==1.0.0
+    # via black
 outcome==1.3.0.post0
     # via trio
+packaging==24.2
+    # via black
+pathspec==0.12.1
+    # via black
+platformdirs==4.3.6
+    # via black
 pysocks==1.7.1
     # via urllib3
 robotframework==7.2
