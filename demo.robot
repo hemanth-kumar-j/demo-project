@@ -11,6 +11,7 @@ ${SLIDER_INPUT}=       10
 ${DROPDOWN_VALUE}=     75
 ${IMAGE}=              tag:img
 ${DRAG_IMAGE}=         id:logo
+${PARAGRAPH}=          id:pText
 ${DROP_1}=             id:drop1
 ${DROP_2}=             id:drop2
 ${DEMO_PAGE}=          id:myForm
@@ -23,6 +24,7 @@ ${SLIDER}=             id:mySlider
 ${DROPDOWN}=           id:mySelect
 ${TEXT_IFRAME}=        id:myFrame2
 ${CHECKBOX_IFRAME}=    id:myFrame3
+${BUTTON}=             id:myButton
 ${CHECKBOX}=           id:checkBox1
 ${CHECKBOX_1}=         id:checkBox2
 ${CHECKBOX_2}=         id:checkBox3
@@ -37,6 +39,7 @@ ${TEXT_INPUT}=         id:myTextInput
 ${DROPDOWN_LINK_1}=    id:dropOption1
 ${DROPDOWN_LINK_2}=    id:dropOption2
 ${DROPDOWN_LINK_3}=    id:dropOption3
+${READONLY_FIELD}=     id:readOnlyText
 ${RADIO_BUTTON_1}=     id:radioButton1
 ${RADIO_BUTTON_2}=     id:radioButton2
 ${PRE_FILLED_TEXT}=    id:myTextInput2
@@ -71,6 +74,18 @@ Test pre-field text filled
 Test placeholder
     [Tags]    placeholder
     Verify placeholder disappears on typing
+
+Test button color change
+    [Tags]    button
+    Verify button color before and after click
+
+Test read-only text field
+    [Tags]    read_only_text
+    Verify read-only text field
+
+Test paragraph with text
+    [Tags]    paragraph
+    Verify paragraph with text
 
 Test svg
     [Tags]    svg
@@ -164,6 +179,26 @@ Verify placeholder disappears on typing
     Input Text    ${PLACEHOLDER}    HELLO WORLD
     ${AFTER_TEXT}=    Get Value    ${PLACEHOLDER}
     Should Be Equal    ${AFTER_TEXT}    HELLO WORLD
+
+Verify button color before and after click
+    ${INITIAL_COLOR}=    Get Element Attribute    ${BUTTON}    style
+    Should Contain    ${INITIAL_COLOR}    color: green
+    Click Button    ${BUTTON}
+    Sleep    1
+    ${NEW_COLOR}=    Get Element Attribute    ${BUTTON}    style
+    Should Contain    ${NEW_COLOR}    color: purple
+
+Verify read-only text field
+    ${READONLY}=    Get Element Attribute    ${READONLY_FIELD}    readonly
+    Should Be Equal    ${READONLY}    true
+    ${TEXT}=    Get Value    ${READONLY_FIELD}
+    Should Be Equal    ${TEXT}    The Color is Purple
+
+Verify paragraph with text
+    ${TEXT}=    Get Text    ${PARAGRAPH}
+    Should Be Equal    ${TEXT}    This Text is Purple
+    ${STYLE}=    Get Element Attribute    ${PARAGRAPH}    style
+    Should Contain    ${STYLE}    color: purple
 
 Check svg animation and color
     Sleep    2
