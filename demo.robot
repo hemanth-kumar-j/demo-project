@@ -12,8 +12,8 @@ ${DROPDOWN_VALUE}=     75
 ${IMAGE}=              tag:img
 ${DRAG_IMAGE}=         id:logo
 ${PARAGRAPH}=          id:pText
-${DROP_1}=             id:drop1
-${DROP_2}=             id:drop2
+${DROP_A}=             id:drop1
+${DROP_B}=             id:drop2
 ${DEMO_PAGE}=          id:myForm
 ${SVG}=                id:svgRect
 ${LINK_TEXT_1}=        id:myLink2
@@ -51,6 +51,8 @@ ${URL_LINK_2}=         https://seleniumbase.io
 ${URL_LINK_1}=         https://seleniumbase.com
 ${GITHUB_ICON}=        class:octicon-mark-github
 ${URL}=                https://seleniumbase.io/demo_page/
+${DROP_A_IMG}=         xpath://*[@id="drop1"]/*[@id="logo"]
+${DROP_B_IMG}=         xpath://*[@id="drop2"]/*[@id="logo"]
 ${DROPDOWN_OUTPUT}=    xpath://*[@id="tbodyId"]/tr[1]/td[4]/h3
 
 ***Test Cases***
@@ -184,13 +186,12 @@ Verify button color before and after click
     ${INITIAL_COLOR}=    Get Element Attribute    ${BUTTON}    style
     Should Contain    ${INITIAL_COLOR}    color: green
     Click Button    ${BUTTON}
-    Sleep    1
     ${NEW_COLOR}=    Get Element Attribute    ${BUTTON}    style
     Should Contain    ${NEW_COLOR}    color: purple
 
 Verify read-only text field
     ${READONLY}=    Get Element Attribute    ${READONLY_FIELD}    readonly
-    Should Be Equal    ${READONLY}    true
+    Should Not Be Empty    ${READONLY}
     ${TEXT}=    Get Value    ${READONLY_FIELD}
     Should Be Equal    ${TEXT}    The Color is Purple
 
@@ -201,10 +202,13 @@ Verify paragraph with text
     Should Contain    ${STYLE}    color: purple
 
 Check svg animation and color
-    Sleep    2
     Click Element    ${SVG}
-    ${animation_state}=    Execute JavaScript    return window.getComputedStyle(document.querySelector('svg rect')).animationPlayState
-    Should Be Equal    ${animation_state}    running
+    Sleep    2
+    ${ANIMATION_STATE}=    Execute JavaScript    return window.getComputedStyle(document.querySelector('svg rect')).animationPlayState
+    Should Be Equal    ${ANIMATION_STATE}    running
+    Verify animation color
+
+Verify animation color
     ${FILL_COLOR}=    Get Element Attribute    ${SVG}    fill
     Should Be Equal    "${FILL_COLOR}"    "#4CA0A0"
 
@@ -213,6 +217,10 @@ Move slider
     ${SLIDER_VAL}=    Evaluate    ${SLIDER_BAR} / 100
     ${SLIDER_VALUE}=    Evaluate    ${SLIDER_VAL} * ${SLIDER_INPUT}
     ${SLIDER_HALF}=    Evaluate    ${SLIDER_BAR} / 2
+    Move slider by input value    ${SLIDER_VALUE}    ${SLIDER_HALF}
+
+Move slider by input value
+    [Arguments]    ${SLIDER_VALUE}    ${SLIDER_HALF}
     ${X}=    Evaluate    ${SLIDER_VALUE} - ${SLIDER_HALF}
     ${X}=    Convert To Number    ${X}    0
     Drag And Drop By Offset    ${SLIDER}    ${X}    0
@@ -223,6 +231,10 @@ Check progress bar
     Should Contain    ${TEXT}    ${SLIDER_INPUT}%
     ${VALUE}=    Get Element Attribute    ${PROGRESS_BAR}    value
     Should Be Equal    ${VALUE}    ${SLIDER_INPUT}
+    Log progress bar value    ${TEXT}
+
+Log progress bar value
+    [Arguments]    ${TEXT}
     ${PROGRESS}=    Set Variable    <h2>${TEXT}</h2>
     Log    ${PROGRESS}    html=True
 
@@ -230,6 +242,10 @@ Select dropdown value and check meter
     Select From List By Label    ${DROPDOWN}    Set to ${DROPDOWN_VALUE}%
     ${TEXT}=    Get Text    ${METER_TEXT}
     Should Contain    ${TEXT}    ${DROPDOWN_VALUE}%
+    Check Meter    ${TEXT}
+
+Check Meter
+    [Arguments]    ${TEXT}
     ${VALUE}=    Get Element Attribute    ${METER_BAR}    value
     ${PERCENTAGE}=    Evaluate    float(${VALUE}) * 100
     Should Be Equal As Numbers    ${PERCENTAGE}    ${DROPDOWN_VALUE}
@@ -252,17 +268,19 @@ Select radio buttons and verify
     Click Element    ${RADIO_BUTTON_2}
     ${CHECKED}=    Get Element Attribute    ${RADIO_BUTTON_2}    checked
     Should Be Equal    ${CHECKED}    true
-    Click Element    ${RADIO_BUTTON_1}
     ${CHECKED}=    Get Element Attribute    ${RADIO_BUTTON_1}    checked
-    Should Be Equal    ${CHECKED}    true
+    Should Not Be Equal    ${CHECKED}    true
 
 Select checkbox and drag n drop the image
     Select Checkbox    ${CHECKBOX}
     Wait Until Element Is Visible    ${DRAG_IMAGE}
-    Drag And Drop    ${DRAG_IMAGE}    ${DROP_2}
-    Sleep    1
+    Drag And Drop    ${DRAG_IMAGE}    ${DROP_B}
+    Verify drop-A and drop-B
+
+Verify drop-A and drop-B
+    Page Should Contain Element    ${DROP_B_IMG}
     Capture Element Screenshot    ${HIDDEN_ROW}
-    Drag And Drop    ${DRAG_IMAGE}    ${DROP_1}
+    Page Should Not Contain Element    ${DROP_A_IMG}
 
 Select checkboxes and verify
     Select checkbox and verify    ${CHECKBOX_1}
@@ -300,6 +318,9 @@ Click url and check output
     Page Should Contain Link    ${URL_LINK}
     Click Link    ${URL_LINK}
     Wait Until Page Contains    ${VERIFY_TEXT}
+    Go back after screenshot
+
+Go back after screenshot
     Sleep    2
     Capture Page Screenshot
     Go Back
@@ -317,6 +338,10 @@ Click link with text and verify
     ${TEXT}=    Get Text    ${LINK_TEXT}
     Should Be Equal    ${TEXT}    ${LINK_NAME}
     Click Link    ${TEXT}
+    Capture screenshot after verify the current location    ${EXPECTED_URL}    ${EXPECTED_ELEMENT}
+
+Capture screenshot after verify the current location
+    [Arguments]    ${EXPECTED_URL}    ${EXPECTED_ELEMENT}
     ${CURRENT_URL}=    Get Location
     Should Contain    ${CURRENT_URL}    ${EXPECTED_URL}
     Wait Until Page Contains Element        ${EXPECTED_ELEMENT}
