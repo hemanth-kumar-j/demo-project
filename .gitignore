@@ -8,6 +8,7 @@ wheels/
 
 # venv
 .venv
+Results/
 log.html
 output.xml
 report.html
