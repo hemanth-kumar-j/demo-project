@@ -60,7 +60,7 @@ To run this test suite, ensure you have the following installed:
 2. Execute the test suite using the Robot Framework:
 
    ```bash
-   robot demo.robot
+   inv test
    ```
 
 3. View the generated `log.html` and `report.html` files for detailed test results.
