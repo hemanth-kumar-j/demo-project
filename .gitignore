@@ -8,7 +8,10 @@ wheels/
 
 # venv
 .venv
+robot_results.db
 Results/
 log.html
 output.xml
 report.html
+metrics.html
+dashboard.html
