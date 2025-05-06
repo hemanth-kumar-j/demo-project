@@ -1,5 +1,5 @@
 [project]
-name = "try"
+name = "robot-try"
 version = "0.1.0"
 description = "Add your description here"
 authors = [
@@ -10,7 +10,7 @@ dependencies = [
     "robotframework-seleniumlibrary>=6.7.0",
     "invoke>=2.2.0",
     "black>=25.1.0",
-    "pre-commit>=4.1.0",
+    "pre-commit>=4.2.0",
     "pylint>=3.3.4",
     "robotframework-metrics==3.7.0",
     "robotframework-dashboard>=0.5.0",
@@ -30,4 +30,4 @@ dev-dependencies = []
 allow-direct-references = true
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/try"]
+packages = ["src/robot_try"]
