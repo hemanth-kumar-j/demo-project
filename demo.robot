@@ -2,6 +2,7 @@
 
 Documentation     PracticeAutomation
 Library           SeleniumLibrary
+Library           Screenshot
 Suite Setup       Setup Test Suite
 Suite Teardown    Close All Browsers
 
@@ -148,6 +149,9 @@ Setup Test Suite
 
 Check hover dropdown option and verify
     Select hover dropdown option and verify    ${DROPDOWN_LINK_1}    Link One Selected
+    Screenshot.Set Screenshot Directory    screenshots/
+    Sleep    1
+    Take Screenshot
     Select hover dropdown option and verify    ${DROPDOWN_LINK_2}    Link Two Selected
     Select hover dropdown option and verify    ${DROPDOWN_LINK_3}    Link Three Selected
 

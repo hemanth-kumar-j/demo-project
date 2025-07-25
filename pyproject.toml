@@ -14,6 +14,8 @@ dependencies = [
     "pylint>=3.3.4",
     "robotframework-metrics==3.7.0",
     "robotframework-dashboard>=0.5.0",
+    "pyautogui>=0.9.54",
+    "pillow>=11.3.0",
 ]
 readme = "README.md"
 requires-python = ">= 3.8"

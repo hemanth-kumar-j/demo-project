@@ -44,6 +44,8 @@ markupsafe==3.0.2
     # via jinja2
 mccabe==0.7.0
     # via pylint
+mouseinfo==0.1.3
+    # via pyautogui
 mypy-extensions==1.0.0
     # via black
 nodeenv==1.9.1
@@ -58,18 +60,37 @@ pandas==2.2.3
     # via robotframework-metrics
 pathspec==0.12.1
     # via black
+pillow==11.3.0
+    # via robot-try
 platformdirs==4.3.6
     # via black
     # via pylint
     # via virtualenv
 pre-commit==4.2.0
     # via robot-try
+pyautogui==0.9.54
+    # via robot-try
+pygetwindow==0.0.9
+    # via pyautogui
 pylint==3.3.4
     # via robot-try
+pymsgbox==1.0.9
+    # via pyautogui
+pyperclip==1.9.0
+    # via mouseinfo
+pyrect==0.2.0
+    # via pygetwindow
+pyscreeze==1.0.1
+    # via pyautogui
 pysocks==1.7.1
     # via urllib3
 python-dateutil==2.9.0.post0
     # via pandas
+python3-xlib==0.15
+    # via mouseinfo
+    # via pyautogui
+pytweening==1.2.0
+    # via pyautogui
 pytz==2025.1
     # via pandas
 pyyaml==6.0.2
