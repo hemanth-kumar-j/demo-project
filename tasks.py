@@ -7,6 +7,7 @@ DEFAULT_EXPANDS = [
     "name:SeleniumLibrary.Capture Page Screenshot",
     "name:SeleniumLibrary.Capture Element Screenshot",
     "name:Builtin.Log",
+    "name:Screenshot.Take Screenshot",
 ]
 
 RESULTS_DIR = "Results"
